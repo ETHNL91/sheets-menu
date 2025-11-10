@@ -1,0 +1,17 @@
+{
+  "name": "sheets-menu-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+  "dev": "cross-env ELEVENTY_ENV=development npx @11ty/eleventy --serve --input=src --output=_site",
+  "build": "cross-env ELEVENTY_ENV=production npx @11ty/eleventy --input=src --output=_site"
+}
+,
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "csv-parse": "^5.5.6"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
+  }
+}
