@@ -45,10 +45,16 @@ jobs:
           fi
           npx staticrypt _site/index.html -p "$STATICRYPT_PASSWORD" --short -o _site/index.html
 
+      - name: Debug encrypted index.html
+        run: |
+          echo "First 40 lines of _site/index.html:"
+          head -n 40 _site/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: "_site"
+
 
   deploy:
     needs: build
