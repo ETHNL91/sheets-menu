@@ -9,5 +9,8 @@
   "dependencies": {
     "@11ty/eleventy": "^3.0.0",
     "csv-parse": "^5.5.6"
+  },
+  "devDependencies": {
+    "staticrypt": "^3.5.4"
   }
 }
