@@ -4,8 +4,13 @@ export default function(eleventyConfig) {
 
   // Helpers
   eleventyConfig.addFilter("currency", (v) =>
-    (typeof v === "number" ? v : parseFloat(v)).toLocaleString(undefined, { style: "currency", currency: "USD" })
-  );
+  (typeof v === "number" ? v : parseFloat(v)).toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  })
+);
+
   eleventyConfig.addFilter("byCategory", (items) => {
     const map = {};
     (items || []).forEach(i => {
