@@ -33,7 +33,7 @@ jobs:
 
       - name: Build site
         env:
-          SHEETS_CSV_URL: ${{ secrets.SHEETS_CSV_URL }}
+          SHEETS_DOC_ID: ${{ secrets.SHEETS_DOC_ID }}
         run: npm run build
 
       - name: Upload artifact
