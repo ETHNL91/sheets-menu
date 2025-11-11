@@ -43,7 +43,7 @@ jobs:
           if [ -z "$STATICRYPT_PASSWORD" ]; then
             echo "STATICRYPT_PASSWORD is not set"; exit 1;
           fi
-          npx staticrypt _site/index.html "$STATICRYPT_PASSWORD" --short -o _site/index.html
+          npx staticrypt _site/index.html -p "$STATICRYPT_PASSWORD" --short -o _site/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
