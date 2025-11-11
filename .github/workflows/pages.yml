@@ -35,6 +35,17 @@ jobs:
         env:
           SHEETS_DOC_ID: ${{ secrets.SHEETS_DOC_ID }}
         run: npm run build
+      
+
+      - name: Encrypt index.html with StatiCrypt
+        env:
+          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
+        run: |
+          if [ -z "$STATICRYPT_PASSWORD" ]; then
+            echo "STATICRYPT_PASSWORD is not set"; exit 1;
+          fi
+          npx staticrypt _site/index.html -o _site/index.html
+
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
