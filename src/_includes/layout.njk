@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title or "Menu" }}</title>
+  <title>ETHNL</title>
 
   <!-- Bootstrap CSS -->
   <link
@@ -23,153 +23,299 @@
   </nav>
 
   <header class="container py-3">
-    <h1 class="h2 mb-1">{{ title or "Menu" }}</h1>
-      <div class="row mb-3">
-  <div class="col-md-6">
-    <h2 class="h6 text-uppercase text-secondary mb-1">Contact</h2>
-    <p class="mb-0">
-      <strong>Text / Telegram:</strong> @yourhandle<br>
-      <strong>Backup:</strong> +1 (555) 123-4567
-    </p>
-  </div>
+    <h1 class="h2 mb-1">ETHNL</h1>
 
-  <div class="col-md-6">
-    <h2 class="h6 text-uppercase text-secondary mb-1">Hours</h2>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <h2 class="h6 text-uppercase text-secondary mb-1">Contact</h2>
+        <p class="mb-0">
+          <strong>Text / Signal:</strong> @yourhandle<br>
+          <strong>Backup:</strong> +1 (555) 123-4567
+        </p>
+      </div>
 
-    {# This line will be filled by JS with today’s hours #}
-    <p id="today-hours" class="mb-1">
-      Loading hours…
-    </p>
+      <div class="col-md-6">
+        <h2 class="h6 text-uppercase text-secondary mb-1">Hours</h2>
 
-    {# This will also be updated by JS to show Open/Closed #}
-    <p id="open-status" class="small mb-1 text-secondary"></p>
+        <p id="today-hours" class="mb-1">
+          Loading hours…
+        </p>
 
-    {# Weekly schedule list, JS will populate #}
-    <ul id="hours-weekly" class="list-unstyled small mb-0"></ul>
-  </div>
-</div>
+        <p id="open-status" class="small mb-1 text-secondary"></p>
 
-
+        <ul id="hours-weekly" class="list-unstyled small mb-0"></ul>
+      </div>
+    </div>
   </header>
-  
 
   <main class="container pb-5">
-    {{ content | safe }}
+    <!-- Flower section -->
+    <section class="mb-4" data-category="Flower">
+      <h2 class="h4 mb-3">Flower</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col">
+          <article class="card h-100 shadow-sm menu-card"
+                   data-name="zowahh"
+                   data-tags="t1"
+                   data-category="Flower"
+                   data-featured="false">
+
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <div>
+                  <h3 class="h5 card-title mb-1">Zowahh</h3>
+                </div>
+
+                <div class="text-end">
+                  <div class="badge menu-price-badge">
+                    $250
+                  </div>
+                  <div class="small text-secondary">
+                    / oz
+                  </div>
+                </div>
+              </div>
+
+              <p class="card-text text-secondary mb-2">Sour diesel X Zkittles</p>
+
+              <ul class="list-unstyled small mb-2">
+                <li class="d-flex justify-content-between">
+                  <span>3.5g (⅛)</span>
+                  <span>$35</span>
+                </li>
+                <li class="d-flex justify-content-between">
+                  <span>7g (¼)</span>
+                  <span>$70</span>
+                </li>
+                <li class="d-flex justify-content-between">
+                  <span>14g (½)</span>
+                  <span>$140</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vape section -->
+    <section class="mb-4" data-category="Vape">
+      <h2 class="h4 mb-3">Vape</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col">
+          <article class="card h-100 shadow-sm menu-card"
+                   data-name="grape god disposibles"
+                   data-tags=""
+                   data-category="Vape"
+                   data-featured="false">
+
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <div>
+                  <h3 class="h5 card-title mb-1">Grape God Disposibles</h3>
+                </div>
+
+                <div class="text-end">
+                  <div class="badge menu-price-badge">
+                    $60
+                  </div>
+                  <div class="small text-secondary">
+                    / unit
+                  </div>
+                </div>
+              </div>
+
+              <p class="card-text text-secondary mb-2">Premium Hash Rosin Cart</p>
+
+              <p class="small text-secondary mb-1">Available strains:</p>
+              <div class="d-flex flex-wrap gap-1 mb-2">
+                <span class="badge text-bg-secondary">
+                  Honey Papaya
+                </span>
+                <span class="badge text-bg-secondary">
+                  Papaya Fuel
+                </span>
+                <span class="badge text-bg-secondary">
+                  Black Maple
+                </span>
+                <span class="badge text-bg-secondary">
+                  LCG
+                </span>
+                <span class="badge text-bg-secondary">
+                  Zklittles • $70
+                </span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="container border-top pt-3 pb-5">
-  <small class="text-secondary">&copy; Menu — Powered by Eleventy</small>
-</footer>
+    <small class="text-secondary">&copy; Menu — Powered by Eleventy</small>
+  </footer>
 
-
+  <!-- Filter script -->
   <script>
-  (function() {
-    const q = document.getElementById("search");
-    const sel = document.getElementById("category");
-    const featured = document.getElementById("featuredOnly");
-    const cards = Array.from(document.querySelectorAll(".menu-card"));
+    (function() {
+      const q = document.getElementById("search");
+      const sel = document.getElementById("category");
+      const featured = document.getElementById("featuredOnly");
+      const cards = Array.from(document.querySelectorAll(".menu-card"));
 
-    function apply() {
-      const term = (q?.value || "").toLowerCase().trim();
-      const cat = sel?.value || "";
-      const onlyFeatured = featured?.checked || false;
+      function apply() {
+        const term = (q?.value || "").toLowerCase().trim();
+        const cat = sel?.value || "";
+        const onlyFeatured = featured?.checked || false;
 
-      cards.forEach(card => {
-        const name = (card.dataset.name || "");
-        const tags = (card.dataset.tags || "");
-        const category = (card.dataset.category || "");
-        const isFeatured = card.dataset.featured === "true";
+        cards.forEach(card => {
+          const name = (card.dataset.name || "");
+          const tags = (card.dataset.tags || "");
+          const category = (card.dataset.category || "");
+          const isFeatured = card.dataset.featured === "true";
 
-        const matchesTerm = !term || name.includes(term) || tags.includes(term);
-        const matchesCat = !cat || category === cat;
-        const matchesFeat = !onlyFeatured || isFeatured;
+          const matchesTerm = !term || name.includes(term) || tags.includes(term);
+          const matchesCat = !cat || category === cat;
+          const matchesFeat = !onlyFeatured || isFeatured;
 
-        card.classList.toggle("d-none", !(matchesTerm && matchesCat && matchesFeat));
-      });
-    }
+          card.classList.toggle("d-none", !(matchesTerm && matchesCat && matchesFeat));
+        });
+      }
 
-    [q, sel, featured].forEach(el => el && el.addEventListener("input", apply));
-  })();
+      [q, sel, featured].forEach(el => el && el.addEventListener("input", apply));
+    })();
+  </script>
+
+  <!-- Dynamic hours script -->
   <script>
-  (function () {
-    // --- 1. Define your weekly schedule here ---
-    // 24-hour format. Set open/close to null for "Closed".
-    const weeklyHours = [
-      { dayIndex: 0, label: "Sunday",    open: "10:00", close: "21:00" },
-      { dayIndex: 1, label: "Monday",    open: "10:00", close: "21:00" },
-      { dayIndex: 2, label: "Tuesday",   open: "10:00", close: "21:00" },
-      { dayIndex: 3, label: "Wednesday", open: "10:00", close: "21:00" },
-      { dayIndex: 4, label: "Thursday",  open: "10:00", close: "21:00" },
-      { dayIndex: 5, label: "Friday",    open: "10:00", close: "23:00" },
-      { dayIndex: 6, label: "Saturday",  open: "10:00", close: "23:00" },
-    ];
+(function () {
+  const weeklyHours = [
+    { dayIndex: 0, label: "Sunday",    open: "9:00am",  close: "12:00am" },
+    { dayIndex: 1, label: "Monday",    open: "9:00am",  close: "12:00am" },
+    { dayIndex: 2, label: "Tuesday",   open: "9:00am",  close: "12:00am" },
+    { dayIndex: 3, label: "Wednesday", open: "9:00am",  close: "9:30pm" },
+    { dayIndex: 4, label: "Thursday",  open: "6:00pm",  close: "9:30pm" },
+    { dayIndex: 5, label: "Friday",    open: "6:00pm",  close: "9:30pm" },
+    { dayIndex: 6, label: "Saturday",  open: "6:00pm",  close: "9:30pm" },
+  ];
 
-    // --- 2. Helper: parse "HH:MM" to minutes since midnight ---
-    function toMinutes(str) {
-      if (!str) return null;
-      const [h, m] = str.split(":").map(Number);
+  // Parse "9:00am", "6:30pm" OR "09:00" (24h) → minutes since midnight
+  function toMinutes(str) {
+    if (!str) return null;
+    const s = str.trim().toLowerCase();
+
+    // am/pm format
+    const ampm = s.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/);
+    if (ampm) {
+      let h = parseInt(ampm[1], 10);
+      const m = parseInt(ampm[2], 10);
+      const mer = ampm[3];
+
+      if (mer === "pm" && h !== 12) h += 12;
+      if (mer === "am" && h === 12) h = 0; // 12:xxam → 0:xx
+
       return h * 60 + m;
     }
 
-    // --- 3. Get "today" according to the user's device clock ---
-    const now = new Date();
-    const todayIndex = now.getDay(); // 0 = Sunday, 6 = Saturday
-    const minsNow = now.getHours() * 60 + now.getMinutes();
-
-    const today = weeklyHours.find(h => h.dayIndex === todayIndex);
-
-    const todayHoursEl = document.getElementById("today-hours");
-    const openStatusEl = document.getElementById("open-status");
-    const weeklyListEl = document.getElementById("hours-weekly");
-
-    if (!todayHoursEl || !weeklyListEl) {
-      return; // HTML not present, bail out
-    }
-
-    // --- 4. Format today's hours line ---
-    if (!today.open || !today.close) {
-      todayHoursEl.textContent = `Today (${today.label}): Closed`;
-    } else {
-      todayHoursEl.textContent = `Today (${today.label}): ${today.open} – ${today.close}`;
-    }
-
-    // --- 5. Optional: show "Open now" / "Closed" ---
-    if (today.open && today.close) {
-      const openMins = toMinutes(today.open);
-      const closeMins = toMinutes(today.close);
-      const isOpen = minsNow >= openMins && minsNow < closeMins;
-
-      if (openStatusEl) {
-        openStatusEl.textContent = isOpen ? "Open now" : "Closed";
-        openStatusEl.classList.toggle("text-success", isOpen);
-        openStatusEl.classList.toggle("text-danger", !isOpen);
+    // fallback: 24h "HH:MM"
+    const parts = s.split(":");
+    if (parts.length === 2) {
+      const h = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10);
+      if (!isNaN(h) && !isNaN(m)) {
+        return h * 60 + m;
       }
-    } else if (openStatusEl) {
-      openStatusEl.textContent = "Closed today";
-      openStatusEl.classList.add("text-danger");
     }
 
-    // --- 6. Render full weekly schedule list and highlight today ---
-    weeklyListEl.innerHTML = ""; // clear any placeholder
+    return null;
+  }
 
-    weeklyHours.forEach((h) => {
-      const li = document.createElement("li");
+  const now = new Date();
+  const todayIndex = now.getDay(); // 0–6
+  const minsNowRaw = now.getHours() * 60 + now.getMinutes();
 
-      const isToday = h.dayIndex === todayIndex;
-      const hoursText = (!h.open || !h.close)
-        ? "Closed"
-        : `${h.open} – ${h.close}`;
+  const today = weeklyHours.find(h => h.dayIndex === todayIndex);
+  const todayHoursEl = document.getElementById("today-hours");
+  const openStatusEl = document.getElementById("open-status");
+  const weeklyListEl = document.getElementById("hours-weekly");
 
-      li.textContent = `${h.label}: ${hoursText}`;
+  console.log("[hours] now =", now.toString());
+  console.log("[hours] todayIndex =", todayIndex, "today =", today);
 
-      if (isToday) {
-        li.style.fontWeight = "600";
+  if (!today || !todayHoursEl || !weeklyListEl) {
+    console.warn("[hours] Missing DOM elements or schedule for today");
+    return;
+  }
+
+  // Display today's hours text
+  if (!today.open || !today.close) {
+    todayHoursEl.textContent = `Today (${today.label}): Closed`;
+  } else {
+    todayHoursEl.textContent = `Today (${today.label}): ${today.open} – ${today.close}`;
+  }
+
+  // Compute "open now" with cross-midnight support
+  if (today.open && today.close) {
+    const openMins = toMinutes(today.open);
+    const closeMins = toMinutes(today.close);
+
+    if (openMins == null || closeMins == null) {
+      console.warn("[hours] Could not parse times for", today);
+    }
+
+    let isOpen = false;
+
+    if (openMins != null && closeMins != null) {
+      let start = openMins;
+      let end = closeMins;
+      let nowMins = minsNowRaw;
+
+      // If close <= open, treat as going past midnight
+      // e.g. 9:00am–12:00am (next day) or 6:00pm–2:00am
+      if (end <= start) {
+        end += 24 * 60;
+        if (nowMins < start) {
+          nowMins += 24 * 60;
+        }
       }
 
-      weeklyListEl.appendChild(li);
-    });
-  })();
-</script>
+      isOpen = nowMins >= start && nowMins < end;
+
+      console.log("[hours] openMins =", openMins,
+                  "closeMins =", closeMins,
+                  "minsNowRaw =", minsNowRaw,
+                  "adjustedNow =", nowMins,
+                  "isOpen =", isOpen);
+    }
+
+    if (openStatusEl) {
+      openStatusEl.textContent = isOpen ? "Open now" : "Closed";
+      openStatusEl.classList.remove("text-secondary");
+      openStatusEl.classList.toggle("text-success", isOpen);
+      openStatusEl.classList.toggle("text-danger", !isOpen);
+    }
+  } else if (openStatusEl) {
+    openStatusEl.textContent = "Closed today";
+    openStatusEl.classList.remove("text-secondary");
+    openStatusEl.classList.add("text-danger");
+  }
+
+  // Weekly list
+  weeklyListEl.innerHTML = "";
+  weeklyHours.forEach((h) => {
+    const li = document.createElement("li");
+    const isToday = h.dayIndex === todayIndex;
+    const displayText = (!h.open || !h.close)
+      ? "Closed"
+      : `${h.open} – ${h.close}`;
+    li.textContent = `${h.label}: ${displayText}`;
+    if (isToday) li.style.fontWeight = "600";
+    weeklyListEl.appendChild(li);
+  });
+})();
+  </script>
+
 
   </script>
 
