@@ -43,16 +43,17 @@ jobs:
           if [ -z "$STATICRYPT_PASSWORD" ]; then
             echo "STATICRYPT_PASSWORD is not set"; exit 1;
           fi
-
+          
           # 1) Make a fresh encrypted folder
           rm -rf encrypted
           mkdir -p encrypted
-
+          
           # 2) Copy everything from _site into encrypted
           cp -R _site/. encrypted/
+          
+          # 3) Encrypt the copied index.html in-place (call CLI via node)
+          node node_modules/staticrypt/cli/index.js encrypted/index.html -p "$STATICRYPT_PASSWORD" --short -o encrypted/index.html
 
-          # 3) Encrypt the copied index.html in-place
-          npx staticrypt encrypted/index.html -p "$STATICRYPT_PASSWORD" --short -o encrypted/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
