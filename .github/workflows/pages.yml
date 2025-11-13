@@ -36,24 +36,29 @@ jobs:
           SHEETS_DOC_ID: ${{ secrets.SHEETS_DOC_ID }}
         run: npm run build
 
-      - name: Encrypt index.html with StatiCrypt
+      - name: Prepare encrypted output
         env:
           STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
         run: |
           if [ -z "$STATICRYPT_PASSWORD" ]; then
             echo "STATICRYPT_PASSWORD is not set"; exit 1;
           fi
-          npx staticrypt _site/index.html -p "$STATICRYPT_PASSWORD" --short -o _site/index.html
 
-      - name: Debug encrypted index.html
-        run: |
-          echo "First 40 lines of _site/index.html:"
-          head -n 40 _site/index.html
+          # 1) Make a fresh encrypted folder
+          rm -rf encrypted
+          mkdir -p encrypted
+
+          # 2) Copy everything from _site into encrypted
+          cp -R _site/. encrypted/
+
+          # 3) Encrypt the copied index.html in-place
+          npx staticrypt encrypted/index.html -p "$STATICRYPT_PASSWORD" --short -o encrypted/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_site"
+          path: "encrypted"
+
 
 
   deploy:
