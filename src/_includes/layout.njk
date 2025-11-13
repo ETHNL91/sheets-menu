@@ -24,7 +24,34 @@
 
   <header class="container py-3">
     <h1 class="h2 mb-1">{{ title or "Menu" }}</h1>
+      <div class="row mb-3">
+  <div class="col-md-6">
+    <h2 class="h6 text-uppercase text-secondary mb-1">Contact</h2>
+    <p class="mb-0">
+      <strong>Text / Telegram:</strong> @yourhandle<br>
+      <strong>Backup:</strong> +1 (555) 123-4567
+    </p>
+  </div>
+
+  <div class="col-md-6">
+    <h2 class="h6 text-uppercase text-secondary mb-1">Hours</h2>
+
+    {# This line will be filled by JS with today’s hours #}
+    <p id="today-hours" class="mb-1">
+      Loading hours…
+    </p>
+
+    {# This will also be updated by JS to show Open/Closed #}
+    <p id="open-status" class="small mb-1 text-secondary"></p>
+
+    {# Weekly schedule list, JS will populate #}
+    <ul id="hours-weekly" class="list-unstyled small mb-0"></ul>
+  </div>
+</div>
+
+
   </header>
+  
 
   <main class="container pb-5">
     {{ content | safe }}
@@ -63,6 +90,87 @@
 
     [q, sel, featured].forEach(el => el && el.addEventListener("input", apply));
   })();
+  <script>
+  (function () {
+    // --- 1. Define your weekly schedule here ---
+    // 24-hour format. Set open/close to null for "Closed".
+    const weeklyHours = [
+      { dayIndex: 0, label: "Sunday",    open: "10:00", close: "21:00" },
+      { dayIndex: 1, label: "Monday",    open: "10:00", close: "21:00" },
+      { dayIndex: 2, label: "Tuesday",   open: "10:00", close: "21:00" },
+      { dayIndex: 3, label: "Wednesday", open: "10:00", close: "21:00" },
+      { dayIndex: 4, label: "Thursday",  open: "10:00", close: "21:00" },
+      { dayIndex: 5, label: "Friday",    open: "10:00", close: "23:00" },
+      { dayIndex: 6, label: "Saturday",  open: "10:00", close: "23:00" },
+    ];
+
+    // --- 2. Helper: parse "HH:MM" to minutes since midnight ---
+    function toMinutes(str) {
+      if (!str) return null;
+      const [h, m] = str.split(":").map(Number);
+      return h * 60 + m;
+    }
+
+    // --- 3. Get "today" according to the user's device clock ---
+    const now = new Date();
+    const todayIndex = now.getDay(); // 0 = Sunday, 6 = Saturday
+    const minsNow = now.getHours() * 60 + now.getMinutes();
+
+    const today = weeklyHours.find(h => h.dayIndex === todayIndex);
+
+    const todayHoursEl = document.getElementById("today-hours");
+    const openStatusEl = document.getElementById("open-status");
+    const weeklyListEl = document.getElementById("hours-weekly");
+
+    if (!todayHoursEl || !weeklyListEl) {
+      return; // HTML not present, bail out
+    }
+
+    // --- 4. Format today's hours line ---
+    if (!today.open || !today.close) {
+      todayHoursEl.textContent = `Today (${today.label}): Closed`;
+    } else {
+      todayHoursEl.textContent = `Today (${today.label}): ${today.open} – ${today.close}`;
+    }
+
+    // --- 5. Optional: show "Open now" / "Closed" ---
+    if (today.open && today.close) {
+      const openMins = toMinutes(today.open);
+      const closeMins = toMinutes(today.close);
+      const isOpen = minsNow >= openMins && minsNow < closeMins;
+
+      if (openStatusEl) {
+        openStatusEl.textContent = isOpen ? "Open now" : "Closed";
+        openStatusEl.classList.toggle("text-success", isOpen);
+        openStatusEl.classList.toggle("text-danger", !isOpen);
+      }
+    } else if (openStatusEl) {
+      openStatusEl.textContent = "Closed today";
+      openStatusEl.classList.add("text-danger");
+    }
+
+    // --- 6. Render full weekly schedule list and highlight today ---
+    weeklyListEl.innerHTML = ""; // clear any placeholder
+
+    weeklyHours.forEach((h) => {
+      const li = document.createElement("li");
+
+      const isToday = h.dayIndex === todayIndex;
+      const hoursText = (!h.open || !h.close)
+        ? "Closed"
+        : `${h.open} – ${h.close}`;
+
+      li.textContent = `${h.label}: ${hoursText}`;
+
+      if (isToday) {
+        li.style.fontWeight = "600";
+      }
+
+      weeklyListEl.appendChild(li);
+    });
+  })();
+</script>
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
