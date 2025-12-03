@@ -78,15 +78,6 @@ function buildBreakdown(item) {
 
 
 export default async function () {
-  const docId = getSpreadsheetId();
-
-  if (!docId) {
-    console.warn(
-      "[menu.js] SHEETS_DOC_ID is not set to a valid ID or URL. Returning empty menu."
-    );
-    return [];
-  }
-
   const menuUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=1941729945#gid=1941729945`;
   const strainsUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=1941729945#gid=1941729945`;
 
