@@ -85,8 +85,8 @@ export default async function () {
     return [];
   }
 
-  const menuUrl = `https://docs.google.com/spreadsheets/d/${docId}/gviz/tq?tqx=out:csv&sheet=menu`;
-  const strainsUrl = `https://docs.google.com/spreadsheets/d/${docId}/gviz/tq?tqx=out:csv&sheet=strains`;
+  const menuUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=0#gid=0`;
+  const strainsUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=0#gid=0`;
 
   const [menuRecords, strainRecords] = await Promise.all([
     fetchCsv(menuUrl, "menu"),
