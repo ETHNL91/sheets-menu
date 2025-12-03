@@ -34,6 +34,8 @@ async function fetchCsv(url, label) {
 
   const text = await res.text();
 
+  console.log(`[menu.js] First 120 chars from ${label}:`, text.slice(0, 120));
+
   const rows = csvParse(text, {
     columns: true,
     skip_empty_lines: true,
