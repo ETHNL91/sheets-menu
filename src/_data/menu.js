@@ -61,7 +61,7 @@ function buildBreakdown(item) {
 export default async function () {
   // HARD-CODED CSV EXPORT LINKS (correct format)
   const menuUrl =
-    "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=0";
+    "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=1941729945";
 
   const strainsUrl =
     "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=1941729945";
