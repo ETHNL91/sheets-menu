@@ -71,6 +71,9 @@ export default async function () {
     fetchCsv(strainsUrl, "strains"),
   ]);
 
+console.log("[menu.js] menuRecords length:", menuRecords.length);
+console.log("[menu.js] first menu record:", menuRecords[0]);
+
   const strainsByParent = {};
   for (const row of strainRecords) {
     const parentId = (row.parent_id || "").toString().trim();
