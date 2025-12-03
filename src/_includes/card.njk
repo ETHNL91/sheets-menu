@@ -1,72 +1,48 @@
-<div class="col">
-  <article class="card h-100 shadow-sm menu-card"
-           data-name="{{ item.name | lower }}"
-           data-tags="{{ item.tags | join(' ') | lower }}"
-           data-category="{{ item.category }}"
-           data-featured="{{ item.featured }}">
+{# FILE: src/_includes/card.njk #}
+<article class="card h-100">
+  <div class="card-body">
+    <h3 class="h6 mb-2">{{ item.name }}</h3>
 
     {% if item.image_url %}
-    <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}">
+      <img src="{{ item.image_url }}" alt="{{ item.name }}" class="img-fluid mb-2" loading="lazy">
     {% endif %}
 
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-start mb-1">
-        <div>
-          <h3 class="h5 card-title mb-1">{{ item.name }}</h3>
-        </div>
+    {% if item.description %}
+      <p class="mb-2">{{ item.description }}</p>
+    {% endif %}
 
-        {% if item.priceNumber %}
-          {% set isFlower = item.category and item.category | lower == "flower" %}
-          <div class="text-end">
+    {% if item.priceNumber %}
+      <p class="mb-2"><strong>\${{ item.priceNumber }}</strong></p>
+    {% endif %}
 
-            {# 🔥 UPDATED PRICE BADGE — now uses a custom class #}
-            <div class="badge menu-price-badge">
-              {{ item.priceNumber | currency }}
-            </div>
-
-            <div class="small text-secondary">
-              {% if isFlower %}
-                / oz
-              {% else %}
-                / unit
-              {% endif %}
-            </div>
-          </div>
-        {% endif %}
-      </div>
-
-      {% if item.description %}
-      <p class="card-text text-secondary mb-2">{{ item.description }}</p>
-      {% endif %}
-
-      {% if item.strains and item.strains.length %}
-        <p class="small text-secondary mb-1">Available strains:</p>
-        <div class="d-flex flex-wrap gap-1 mb-2">
-        {% for s in item.strains %}
-          <span class="badge text-bg-secondary">
-            {{ s.name }}
-            {% if s.priceNumber %}
-              • {{ s.priceNumber | currency }}
-            {% endif %}
-          </span>
-        {% endfor %}
-        </div>
-      {% endif %}
-
-      {% if item.price_breakdown and item.price_breakdown.length %}
-      <ul class="list-unstyled small mb-2">
-        {% for row in item.price_breakdown %}
-        <li class="d-flex justify-content-between">
-          <span>{{ row.label }}</span>
-          <span>{{ row.price | currency }}</span>
-        </li>
+    {% if item.tags and item.tags.length %}
+      <ul class="list-inline small mb-2">
+        {% for t in item.tags %}
+          <li class="list-inline-item badge bg-light text-dark">{{ t }}</li>
         {% endfor %}
       </ul>
-      {% endif %}
+    {% endif %}
 
-      {% if item.featured %}
-      <span class="badge text-bg-success mt-2">Featured</span>
-      {% endif %}
-    </div>
-  </article>
-</div>
+    {% if item.strains and item.strains.length %}
+      <div class="mb-2">
+        <strong class="small">Strains</strong>
+        <ul class="mb-0 small">
+          {% for s in item.strains %}
+            <li>{{ s.name }}{% if s.priceNumber %} — \${{ s.priceNumber }}{% endif %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if item.price_breakdown and item.price_breakdown.length %}
+      <div class="mb-0">
+        <strong class="small">Flower breakdown</strong>
+        <ul class="mb-0 small">
+          {% for b in item.price_breakdown %}
+            <li>{{ b.label }} — \${{ b.price }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</article>
