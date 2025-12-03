@@ -1,20 +1,79 @@
+{# FILE: src/index.njk #}
 ---
-title: "ETHNL"
-layout: "layout.njk"
+pagination: false
+layout: false
+title: Menu
 ---
 
-{% set groups = menu | byCategory %}
-{% if groups.length == 0 %}
-  <div class="alert alert-info">No items available right now. Check back soon!</div>
-{% endif %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 1rem; }
+    .muted { color: #666; font-size: .9rem; }
+    ul.inline { list-style: none; padding: 0; margin: 0; display: flex; gap: .5rem; flex-wrap: wrap; }
+    .tag { border: 1px solid #ddd; border-radius: 999px; padding: .1rem .5rem; font-size: .8rem; }
+    .strains, .breakdown { margin-top: .5rem; }
+  </style>
+</head>
+<body>
 
-{% for cat, items in groups %}
-<section class="mb-4" data-category="{{ cat }}">
-  <h2 class="h4 mb-3">{{ cat }}</h2>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-    {% for item in items %}
-      {% set item = item %}{% include "card.njk" %}
+  <h1>{{ title }}</h1>
+
+  {# Debug: ensure template receives all items from data (# visible reported in logs) #}
+  <p class="muted">Items received: {{ menu | length }}</p>
+
+  <div class="grid">
+    {# IMPORTANT: No extra filtering or slicing. Just render what menu.js returns. #}
+    {% for item in menu %}
+      <article class="card">
+        <h2>{{ item.name }}</h2>
+        {% if item.image_url %}
+          <img src="{{ item.image_url }}" alt="{{ item.name }}" style="width:100%;height:auto;border-radius:8px;margin:.5rem 0;" loading="lazy">
+        {% endif %}
+        <p class="muted">{{ item.category }}{% if item.featured %} • Featured{% endif %}</p>
+        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+        {% if item.priceNumber %}<p><strong>\${{ item.priceNumber }}</strong></p>{% endif %}
+
+        {% if item.tags and item.tags.length %}
+          <ul class="inline">
+            {% for t in item.tags %}
+              <li class="tag">{{ t }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if item.strains and item.strains.length %}
+          <div class="strains">
+            <strong>Strains</strong>
+            <ul>
+              {% for s in item.strains %}
+                <li>
+                  {{ s.name }}{% if s.priceNumber %} — \${{ s.priceNumber }}{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if item.price_breakdown and item.price_breakdown.length %}
+          <div class="breakdown">
+            <strong>Flower breakdown</strong>
+            <ul>
+              {% for b in item.price_breakdown %}
+                <li>{{ b.label }} — \${{ b.price }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </article>
     {% endfor %}
   </div>
-</section>
-{% endfor %}
+
+</body>
+</html>

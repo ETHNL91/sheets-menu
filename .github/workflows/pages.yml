@@ -1,11 +1,10 @@
-name: Build and Deploy
+# FILE: .github/workflows/eleventy-pages.yml
+name: Build and Deploy Eleventy to GitHub Pages
 
 on:
-  workflow_dispatch: {}
-  schedule:
-    - cron: "0 * * * *"  # every hour, UTC
   push:
-    branches: ["main"]
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,47 +25,26 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install deps
+        run: npm ci
 
-      - name: Build site
-        env:
-          SHEETS_DOC_ID: ${{ secrets.SHEETS_DOC_ID }}
-        run: npm run build
-
-      - name: Prepare encrypted output
-        env:
-          STATICRYPT_PASSWORD: ${{ secrets.STATICRYPT_PASSWORD }}
-        run: |
-          if [ -z "$STATICRYPT_PASSWORD" ]; then
-            echo "STATICRYPT_PASSWORD is not set"; exit 1;
-          fi
-          
-          # 1) Make a fresh encrypted folder
-          rm -rf encrypted
-          mkdir -p encrypted
-          
-          # 2) Copy everything from _site into encrypted
-          cp -R _site/. encrypted/
-          
-          # 3) Encrypt the copied index.html in-place (call CLI via node)
-          node node_modules/staticrypt/cli/index.js encrypted/index.html -p "$STATICRYPT_PASSWORD" --short -o encrypted/index.html
-
+      - name: Build (Eleventy v3)
+        run: npx @11ty/eleventy
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "encrypted"
-
-
+          path: _site
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
