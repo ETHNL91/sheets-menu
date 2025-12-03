@@ -61,10 +61,10 @@ function buildBreakdown(item) {
 export default async function () {
   // HARD-CODED CSV EXPORT LINKS (correct format)
   const menuUrl =
-    "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=1941729945";
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRga6Mj8T4T5O2xqeT6qA9jT-kw_jxUv5r7Dgi_CzlEpeYeiWpnUhobhMRLoI1t0eJigpo2-jksrtoN/pubhtml";
 
   const strainsUrl =
-    "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=1941729945";
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRga6Mj8T4T5O2xqeT6qA9jT-kw_jxUv5r7Dgi_CzlEpeYeiWpnUhobhMRLoI1t0eJigpo2-jksrtoN/pubhtml";
 
   const [menuRecords, strainRecords] = await Promise.all([
     fetchCsv(menuUrl, "menu"),
