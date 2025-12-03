@@ -87,8 +87,8 @@ export default async function () {
     return [];
   }
 
-  const menuUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=0#gid=0`;
-  const strainsUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=0#gid=0`;
+  const menuUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=1941729945#gid=1941729945`;
+  const strainsUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=1941729945#gid=1941729945`;
 
   const [menuRecords, strainRecords] = await Promise.all([
     fetchCsv(menuUrl, "menu"),
