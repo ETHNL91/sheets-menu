@@ -1,20 +1,5 @@
 import { parse as csvParse } from "csv-parse/sync";
 
-function getSpreadsheetId() {
-  const raw = process.env.SHEETS_DOC_ID || "";
-
-  if (!raw) return null;
-
-  const m = raw.match(/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
-  if (m) return m[1];
-
-  if (/^[a-zA-Z0-9-_]{20,}$/.test(raw)) {
-    return raw;
-  }
-
-  return null;
-}
-
 async function fetchCsv(url, label) {
   if (!url) {
     console.warn(`[menu.js] No URL for ${label}, returning empty.`);
@@ -46,14 +31,11 @@ async function fetchCsv(url, label) {
   return rows;
 }
 
-// more forgiving boolean parser
 function toBool(v) {
   const s = (v || "").toString().trim().toLowerCase();
   return ["true", "1", "yes", "y", "✓", "x"].includes(s);
 }
 
-// Flower price breakdowns from ounce base:
-// +10%, round up to nearest $5
 function buildBreakdown(item) {
   const base = item.priceNumber;
   if (!base || isNaN(base)) return [];
@@ -76,17 +58,19 @@ function buildBreakdown(item) {
   });
 }
 
-
 export default async function () {
-  const menuUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=1941729945#gid=1941729945`;
-  const strainsUrl = `https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/edit?gid=1941729945#gid=1941729945`;
+  // HARD-CODED CSV EXPORT LINKS (correct format)
+  const menuUrl =
+    "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=0";
+
+  const strainsUrl =
+    "https://docs.google.com/spreadsheets/d/17X6IbkQctEPB63_Q_a3x78DclUIRNdxk1240eh00hPA/export?format=csv&gid=1941729945";
 
   const [menuRecords, strainRecords] = await Promise.all([
     fetchCsv(menuUrl, "menu"),
     fetchCsv(strainsUrl, "strains"),
   ]);
 
-  // parent_id -> [strain...]
   const strainsByParent = {};
   for (const row of strainRecords) {
     const parentId = (row.parent_id || "").toString().trim();
