@@ -1,7 +1,7 @@
 // FILE: .eleventy.js
 export default function(eleventyConfig) {
   // Copy images/assets straight through
-  eleventyConfig.addPassthroughCopy("assets");
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   // Filters
   eleventyConfig.addFilter("currency", (v) =>
