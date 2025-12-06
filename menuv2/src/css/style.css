@@ -1,0 +1,77 @@
+body {
+  background-color: #2f3c2a;
+  color: #f8f9fa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Container spacing */
+.container {
+  max-width: 1200px;
+}
+
+/* Header */
+.header-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.header-badge {
+  background: rgba(0, 0, 0, 0.45);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Cards */
+.card {
+  border-radius: 1rem;
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  border-color: #4e8a4e;
+}
+
+/* Price badge */
+.menu-price-badge {
+  background-color: #0b8f15;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.35rem;
+  font-size: 0.85rem;
+}
+
+/* Featured badge */
+.featured-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #d9b244;
+  color: #1a1a1a;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tag badges tweaks */
+.badge.bg-light.text-dark {
+  opacity: 0.9;
+  font-weight: 600;
+  padding: 0.3rem 0.55rem;
+}
+
+/* Section spacing */
+section {
+  margin-bottom: 2.5rem;
+}

@@ -1,0 +1,56 @@
+{# FILE: src/_includes/card.njk #}
+
+{# Normalise price: prefer item.priceNumber, fall back to item.price #}
+{% set price = item.priceNumber %}
+{% if price is not defined or price == null or price == '' %}
+  {% set price = item.price %}
+{% endif %}
+
+<article class="card h-100">
+  {% if item.featured %}
+    <div class="featured-badge">Featured</div>
+  {% endif %}
+
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <h3 class="h6 mb-0">{{ item.name }}</h3>
+
+      {% if price %}
+        <span class="badge menu-price-badge ms-2">${{ price }}</span>
+      {% endif %}
+    </div>
+
+    {% if item.description %}
+      <p class="mb-2 small">{{ item.description }}</p>
+    {% endif %}
+
+    {# Strain list for things like hash rosin carts #}
+    {% if item.strains and item.strains.length %}
+      <div class="mb-2">
+        <strong class="small d-block mb-1">Strains</strong>
+        <ul class="mb-0 small ps-3">
+          {% for s in item.strains %}
+            <li>
+              {{ s.name }}
+              {% if s.priceNumber %}
+                — ${{ s.priceNumber }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {# Flower breakdown on Flower items #}
+    {% if item.price_breakdown and item.price_breakdown.length %}
+      <div class="mb-0">
+        <strong class="small d-block mb-1"></strong>
+        <ul class="mb-0 small ps-3">
+          {% for b in item.price_breakdown %}
+            <li>{{ b.label }} — ${{ b.price }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ title or "Menu" }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; padding: 1.5rem; background: #111; color: #f8f8f8; }
+    h1, h2, h3 { margin: 0 0 .5rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { background: #1e1e1e; border-radius: 0.75rem; padding: 1rem; border: 1px solid #333; }
+    .pill { display: inline-block; padding: .2rem .5rem; border-radius: 999px; font-size: .75rem; background: #222; }
+    .category { opacity: .8; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+    .price { font-weight: 600; }
+    .tags { font-size: .75rem; opacity: .8; margin-top: .25rem; }
+    header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
+  </style>
+</head>
+<body>
+<header class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="header-title mb-0 text-light">{{ title or "Menu" }}</h1>
+  <span class="header-badge">ETHNL MENU </span>
+</header>
+
+
+  <main>
+    {{ content | safe }}
+  </main>
+</body>
+</html>
