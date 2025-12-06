@@ -115,14 +115,14 @@ function buildBreakdown(item) {
   if (category !== "flower") return [];
 
   const units = [
-    { label: "3.5g (⅛)", grams: 3.5 },
-    { label: "7g (¼)", grams: 7 },
-    { label: "14g (½)", grams: 14 },
+    { label: "3.5g", grams: 3.5 },
+    { label: "7g", grams: 7 },
+    { label: "14g", grams: 14 },
   ];
 
   return units.map((u) => {
     const raw = base * (u.grams / 28);
-    const withTen = raw * 1.1;
+    const withTen = raw * 1.2;
     const rounded = Math.ceil(withTen / 5) * 5;
     return { label: u.label, price: rounded };
   });
