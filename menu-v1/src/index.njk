@@ -1,0 +1,26 @@
+{# FILE: src/index.njk #}
+---
+title: "ETHNL"
+layout: "layout.njk"
+---
+
+{% set groups = menu | byCategory %}
+
+{% if groups | objectSize == 0 %}
+  <div class="alert alert-info">No items available right now. Check back soon!</div>
+{% endif %}
+
+{# Iterate entries so we can handle objects safely #}
+{% for pair in groups | entries %}
+  {% set cat = pair[0] %}
+  {% set items = pair[1] %}
+
+  <section class="mb-4" data-category="{{ cat }}">
+    <h2 class="h4 mb-3">{{ cat }}</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+      {% for item in items %}
+        {% include "card.njk" %}
+      {% endfor %}
+    </div>
+  </section>
+{% endfor %}

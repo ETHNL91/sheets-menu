@@ -1,0 +1,12 @@
+# Node dependencies
+menuv2/node_modules/
+
+# Eleventy output folder
+menuv2/_site/
+
+# Environment variables (never commit secrets!)
+menuv2/.env
+
+# Common OS cruft
+.DS_Store
+Thumbs.db
